@@ -1,7 +1,28 @@
 import streamlit as st
 import data_loader
+from data_loader import TYPE_ICONS
 from team_logic import TeamAnalyzer
 from ai_config import SYSTEM_PROMPT
+import base64
+
+# Helper to load SVG as base64
+def get_svg_base64(file_path):
+    try:
+        with open(file_path, "r") as f:
+            svg_data = f.read()
+        b64_data = base64.b64encode(svg_data.encode("utf-8")).decode("utf-8")
+        return f"data:image/svg+xml;base64,{b64_data}"
+    except Exception:
+        return ""
+
+def render_type_with_icon(type_name):
+    """Renders a type name with its icon inline."""
+    icon_path = TYPE_ICONS.get(type_name.lower())
+    if icon_path:
+        icon_b64 = get_svg_base64(icon_path)
+        if icon_b64:
+            return f'<img src="{icon_b64}" width="20" style="vertical-align:middle; margin-right:5px;">{type_name.title()}'
+    return type_name.title()
 
 # Set page config
 st.set_page_config(
@@ -12,18 +33,15 @@ st.set_page_config(
 
 # Load data
 @st.cache_data
-def get_data():
-    return data_loader.load_data()
-
-all_pokemon = get_data()
-analyzer = TeamAnalyzer()
+def get_data(league_code):
+    return data_loader.load_data(league_code)
 
 # Title and Intro
-st.title("🏆 Agente PvP: Constructor de Equipos (Liga Super)")
+st.title("🏆 Agente PvP: Constructor de Equipos")
 st.markdown("""
 **Bienvenido, Entrenador.**
-Esta herramienta te ayudará a construir un equipo competitivo para la Liga Super (CP 1500).
-Selecciona 1 o 2 Pokémon iniciales y deja que el agente sugiera el resto basándose en la sinergia y el meta actual.
+Esta herramienta te ayudará a construir un equipo competitivo.
+Selecciona tu liga, elige 1 o 2 Pokémon iniciales y deja que el agente sugiera el resto.
 """)
 
 # Sidebar for System Prompt (Brain) - HIDDEN
@@ -31,6 +49,18 @@ Selecciona 1 o 2 Pokémon iniciales y deja que el agente sugiera el resto basán
 #     st.header("🧠 Cerebro del Agente")
 #     st.info("Este es el System Prompt que guía la lógica del agente:")
 #     st.code(SYSTEM_PROMPT, language="text")
+
+# League Selector
+league_map = {
+    "Liga Super (CP 1500)": "1500",
+    "Liga Ultra (CP 2500)": "2500",
+    "Liga Master (Sin Límite)": "10000"
+}
+selected_league_name = st.selectbox("Selecciona la Liga:", list(league_map.keys()))
+league_code = league_map[selected_league_name]
+
+all_pokemon = get_data(league_code)
+analyzer = TeamAnalyzer()
 
 # Main Interface
 # Layout: Vertical for better mobile responsiveness
@@ -88,12 +118,38 @@ if generate_btn and selected_pokemon:
                 with st.container(border=True):
                     st.markdown(f"### {role}")
                     st.image(get_image_url(p['speciesId']), use_container_width=True)
+                    
+
+# ... (inside the loop)
+                    # Name and Types with Icons
+                    # Use HTML to display SVG icons inline
+                    type_html = ""
+                    for t, icon_path in zip(p['types'], p['type_icons']):
+                        if icon_path:
+                            icon_b64 = get_svg_base64(icon_path)
+                            if icon_b64:
+                                type_html += f'<img src="{icon_b64}" width="20" style="vertical-align:middle; margin-right:5px;">{t.title()} '
+                            else:
+                                type_html += f'{t.title()} '
+                        else:
+                            type_html += f'{t.title()} '
+                            
                     st.markdown(f"**{p['name']}**")
-                    st.caption(f"Tipos: {', '.join(p['types'])}")
+                    st.markdown(type_html, unsafe_allow_html=True)
+                    
                     st.caption(f"Rating: {p['rating']}")
+                    
                     st.markdown("**Movimientos:**")
-                    for move in p['recommended_moves']:
-                        st.text(f"- {move}")
+                    # Display moves with icons
+                    for move_name, move_icon_path in zip(p['recommended_moves'], p['move_type_icons']):
+                        if move_icon_path:
+                            icon_b64 = get_svg_base64(move_icon_path)
+                            if icon_b64:
+                                st.markdown(f'<img src="{icon_b64}" width="15" style="vertical-align:middle; margin-right:5px;"> {move_name}', unsafe_allow_html=True)
+                            else:
+                                st.text(f"- {move_name}")
+                        else:
+                            st.text(f"- {move_name}")
         
         # Analyze the full team
         analysis = analyzer.evaluate_coverage(current_team)
@@ -115,14 +171,19 @@ if generate_btn and selected_pokemon:
             st.markdown("#### ⚠️ Alertas de Debilidad")
             if analysis['shared_weaknesses']:
                 for w in analysis['shared_weaknesses']:
-                    st.error(f"El equipo es débil a: **{w.upper()}**")
+                    st.markdown(f"El equipo es débil a: {render_type_with_icon(w)}", unsafe_allow_html=True)
             else:
                 st.success("¡No hay debilidades compartidas graves!")
                 
         with c2:
             st.markdown("#### ⚔️ Cobertura Ofensiva")
             if analysis['uncovered_types']:
-                st.warning(f"No tienes daño súper efectivo contra: {', '.join([t.upper() for t in analysis['uncovered_types']])}")
+                # st.warning(f"No tienes daño súper efectivo contra: {', '.join([t.upper() for t in analysis['uncovered_types']])}")
+                st.markdown("No tienes daño súper efectivo contra:")
+                cols = st.columns(3)
+                for i, t in enumerate(analysis['uncovered_types']):
+                    with cols[i % 3]:
+                        st.markdown(render_type_with_icon(t), unsafe_allow_html=True)
             else:
                 st.success("¡Cobertura ofensiva perfecta!")
 

@@ -27,6 +27,169 @@ TYPE_CHART = {
 
 ALL_TYPES = list(TYPE_CHART.keys())
 
+# Type Icons Mapping
+# Using local SVG icons in assets/icons/
+TYPE_ICONS = {
+    "normal": "assets/icons/normal.svg",
+    "fire": "assets/icons/fire.svg",
+    "water": "assets/icons/water.svg",
+    "grass": "assets/icons/grass.svg",
+    "electric": "assets/icons/electric.svg",
+    "ice": "assets/icons/ice.svg",
+    "fighting": "assets/icons/fighting.svg",
+    "poison": "assets/icons/poison.svg",
+    "ground": "assets/icons/ground.svg",
+    "flying": "assets/icons/flying.svg",
+    "psychic": "assets/icons/psychic.svg",
+    "bug": "assets/icons/bug.svg",
+    "rock": "assets/icons/rock.svg",
+    "ghost": "assets/icons/ghost.svg",
+    "dragon": "assets/icons/dragon.svg",
+    "dark": "assets/icons/dark.svg",
+    "steel": "assets/icons/steel.svg",
+    "fairy": "assets/icons/fairy.svg",
+    "none": ""
+}
+
+# English to Spanish Move Translations (Partial list - expanded as needed)
+MOVES_ES = {
+    "TACKLE": "Placaje",
+    "VINE_WHIP": "Látigo Cepa",
+    "POWER_WHIP": "Latigazo",
+    "SEED_BOMB": "Bomba Germen",
+    "SLUDGE_BOMB": "Bomba Lodo",
+    "AIR_SLASH": "Tajo Aéreo",
+    "DRAGON_CLAW": "Garra Dragón",
+    "SHADOW_CLAW": "Garra Umbría",
+    "VOLT_SWITCH": "Voltiocambio",
+    "ROCK_SLIDE": "Avalancha",
+    "EARTHQUAKE": "Terremoto",
+    "HYDRO_CANNON": "Hidrocañón",
+    "FRENZY_PLANT": "Planta Feroz",
+    "BLAST_BURN": "Anillo Ígneo",
+    "COUNTER": "Contraataque",
+    "MUD_SHOT": "Disparo Lodo",
+    "BUBBLE": "Burbuja",
+    "ICE_BEAM": "Rayo Hielo",
+    "PLAY_ROUGH": "Carantoña",
+    "FOUL_PLAY": "Juego Sucio",
+    "THUNDER_SHOCK": "Impactrueno",
+    "DISCHARGE": "Chispazo",
+    "SKY_ATTACK": "Ataque Aéreo",
+    "BRAVE_BIRD": "Pájaro Osado",
+    "HURRICANE": "Vendaval",
+    "WEATHER_BALL_ICE": "Meteorobola (Hielo)",
+    "WEATHER_BALL_FIRE": "Meteorobola (Fuego)",
+    "WEATHER_BALL_WATER": "Meteorobola (Agua)",
+    "WEATHER_BALL_ROCK": "Meteorobola (Roca)",
+    "WEATHER_BALL_NORMAL": "Meteorobola (Normal)",
+    "BODY_SLAM": "Golpe Cuerpo",
+    "NIGHT_SLASH": "Tajo Umbrío",
+    "SCALD": "Escaldar",
+    "SURF": "Surf",
+    "DRILL_RUN": "Taladradora",
+    "STONE_EDGE": "Roca Afilada",
+    "FLAMETHROWER": "Lanzallamas",
+    "MOONBLAST": "Fuerza Lunar",
+    "PSYCHIC": "Psíquico",
+    "FUTURE_SIGHT": "Premonición",
+    "SHADOW_BALL": "Bola Sombra",
+    "DARK_PULSE": "Pulso Umbrío",
+    "DRAGON_BREATH": "Dragoaliento",
+    "OUTRAGE": "Enfado",
+    "CLOSE_COMBAT": "A Bocajarro",
+    "SUPER_POWER": "Fuerza Bruta",
+    "DYNAMIC_PUNCH": "Puño Dinámico",
+    "FOCUS_BLAST": "Onda Certera",
+    "SOLAR_BEAM": "Rayo Solar",
+    "LEAF_BLADE": "Hoja Aguda",
+    "X_SCISSOR": "Tijera X",
+    "BUG_BUZZ": "Zumbido",
+    "MEGAHORN": "Megacuerno",
+    "POISON_JAB": "Puya Nociva",
+    "ACID_SPRAY": "Bomba Ácida",
+    "SLUDGE_WAVE": "Onda Tóxica",
+    "EARTH_POWER": "Tierra Viva",
+    "SAND_TOMB": "Bucle Arena",
+    "ICY_WIND": "Viento Hielo",
+    "AVALANCHE": "Alud",
+    "ICICLE_SPEAR": "Carámbano",
+    "ZAP_CANNON": "Electrocañón",
+    "WILD_CHARGE": "Voltio Cruel",
+    "THUNDERBOLT": "Rayo",
+    "CHARM": "Encanto",
+    "DAZZLING_GLEAM": "Brillo Mágico",
+    "DISARMING_VOICE": "Voz Cautivadora",
+    "LOCK_ON": "Fijar Blanco",
+    "TRI_ATTACK": "Triataque",
+    "PAYBACK": "Vendetta",
+    "CRUNCH": "Triturar",
+    "SNARL": "Alarido",
+    "LICK": "Lengüetazo",
+    "HEX": "Infortunio",
+    "ASTONISH": "Impresionar",
+    "CONFUSION": "Confusión",
+    "PSYCHO_CUT": "Psicocorte",
+    "ZEN_HEADBUTT": "Cabezazo Zen",
+    "SMACK_DOWN": "Antiaéreo",
+    "ROCK_THROW": "Lanzarrocas",
+    "WING_ATTACK": "Ataque Ala",
+    "STEEL_WING": "Ala de Acero",
+    "METAL_CLAW": "Garra Metal",
+    "BULLET_PUNCH": "Puño Bala",
+    "FLASH_CANNON": "Foco Resplandor",
+    "METEOR_MASH": "Puño Meteoro",
+    "IRON_HEAD": "Cabeza de Hierro",
+    "DRAGON_TAIL": "Cola Dragón",
+    "INCINERATE": "Calcinación",
+    "FIRE_SPIN": "Giro Fuego",
+    "EMBER": "Ascuas",
+    "WATER_GUN": "Pistola Agua",
+    "WATERFALL": "Cascada",
+    "RAZOR_LEAF": "Hoja Afilada",
+    "BULLET_SEED": "Semilladora",
+    "POISON_STING": "Picotazo Veneno",
+    "MUD_SLAP": "Bofetón Lodo",
+    "POWDER_SNOW": "Nieve Polvo",
+    "ICE_SHARD": "Canto Helado",
+    "FROST_BREATH": "Vaho Gélido",
+    "THUNDER_FANG": "Colmillo Rayo",
+    "ICE_FANG": "Colmillo Hielo",
+    "FIRE_FANG": "Colmillo Ígneo",
+    "SHADOW_SNEAK": "Sombra Vil",
+    "OMINOUS_WIND": "Viento Aciago",
+    "ANCIENT_POWER": "Poder Pasado",
+    "AERIAL_ACE": "Golpe Aéreo",
+    "DRILL_PECK": "Pico Taladro",
+    "FLY": "Vuelo",
+    "ICY_WIND": "Viento Hielo",
+    "POLTERGEIST": "Poltergeist",
+    "HIGH_HORSEPOWER": "Fuerza Equina",
+    "TRAILBLAZE": "Abrecaminos",
+    "BRUTAL_SWING": "Giro Vil",
+    "LIQUIDATION": "Hidroariete",
+    "LEAFAGE": "Follaje",
+    "FAIRY_WIND": "Viento Feérico",
+    "DOUBLE_KICK": "Doble Patada",
+    "ROLLOUT": "Desenrollar",
+    "SACRED_SWORD": "Espada Santa",
+    "FUSION_FLARE": "Llama Fusión",
+    "FUSION_BOLT": "Rayo Fusión",
+    "SPACIAL_REND": "Corte Vacío",
+    "ROAR_OF_TIME": "Distorsión",
+    "MAGMA_STORM": "Lluvia Ígnea",
+    "SANDSEAR_STORM": "Simún de Arena",
+    "WILDBOLT_STORM": "Electrofurian",
+    "BLEAKWIND_STORM": "Gélido Despertar",
+    "SPRINGTIDE_STORM": "Ciclón Primavera",
+    "NATURES_MADNESS": "Furia Natural",
+    "DARK_VOID": "Brecha Negra",
+    "SWIFT": "Rapidez",
+    "HYPER_BEAM": "Hiperrayo",
+    "RETURN": "Retribución",
+    "FRUSTRATION": "Frustración"
+}
+
 def get_weaknesses(defender_types):
     """
     Calculate weaknesses for a given list of defender types.
@@ -48,12 +211,20 @@ def get_weaknesses(defender_types):
             
     return weaknesses
 
-def load_data():
+def load_data(league="1500"):
     """
     Fetches ranking and gamemaster data, merges them, and returns a list of Pokemon dictionaries.
+    
+    Args:
+        league (str): "1500" (Great), "2500" (Ultra), or "10000" (Master).
     """
-    print("Fetching rankings data...")
-    rankings_url = "https://raw.githubusercontent.com/pvpoke/pvpoke/master/src/data/rankings/all/overall/rankings-1500.json"
+    print(f"Fetching rankings data for league {league}...")
+    
+    # Validate league
+    if league not in ["1500", "2500", "10000"]:
+        league = "1500"
+        
+    rankings_url = f"https://raw.githubusercontent.com/pvpoke/pvpoke/master/src/data/rankings/all/overall/rankings-{league}.json"
     try:
         rankings_response = requests.get(rankings_url)
         rankings_response.raise_for_status()
@@ -109,21 +280,37 @@ def load_data():
         # Get types from gamemaster map
         types = species_types_map.get(species_id, [])
         
-        # Get move types
+        # Get move types and translated names
         move_types = []
+        translated_moves = []
+        move_type_icons = []
+        
         for move in moveset:
             m_type = moves_map.get(move)
             if m_type:
                 move_types.append(m_type)
+                move_type_icons.append(TYPE_ICONS.get(m_type, ""))
+            else:
+                move_type_icons.append("")
+            
+            # Translate move name
+            translated_name = MOVES_ES.get(move, move.replace("_", " ").title())
+            translated_moves.append(translated_name)
         
         # Calculate weaknesses
         weaknesses = get_weaknesses(types)
+        
+        # Get type icons
+        type_icons = [TYPE_ICONS.get(t, "") for t in types]
 
         pokemon_obj = {
             "name": species_name,
             "types": types,
-            "recommended_moves": moveset,
+            "type_icons": type_icons,
+            "recommended_moves": translated_moves, # Use translated names for display
+            "recommended_moves_raw": moveset, # Keep raw IDs if needed
             "move_types": move_types,
+            "move_type_icons": move_type_icons,
             "weaknesses": weaknesses,
             "rating": score,
             "speciesId": species_id # Keeping ID for reference
@@ -131,7 +318,7 @@ def load_data():
         
         processed_data.append(pokemon_obj)
 
-    print(f"Successfully processed {len(processed_data)} Pokemon.")
+    print(f"Successfully processed {len(processed_data)} Pokemon for league {league}.")
     return processed_data
 
 if __name__ == "__main__":
