@@ -1,3 +1,5 @@
-streamlit
+flask
+flask-cors
 pandas
 requests
+gunicorn==21.2.0
