@@ -6,6 +6,8 @@ COPY frontend/package*.json ./
 RUN npm install
 # Copy the rest of the frontend source and build
 COPY frontend/ ./
+ARG VITE_GA_ID
+ENV VITE_GA_ID=$VITE_GA_ID
 RUN npm run build
 
 # Production stage for Python Flask Backend

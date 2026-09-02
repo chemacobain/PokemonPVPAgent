@@ -9,6 +9,7 @@
   "dependencies": {
     "pinia": "^2.1.0",
     "vue": "^3.4.0",
+    "vue-gtag": "^3.7.1",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
