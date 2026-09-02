@@ -149,6 +149,56 @@ class TeamAnalyzer:
         suggestions.sort(key=lambda x: x["match_score"], reverse=True)
         return suggestions[:top_n]
 
+    def suggest_top_teams(self, all_pokemon, count=5):
+        """
+        Builds `count` high-rated, non-overlapping teams for the current league.
+
+        Uses the same synergy scoring as teammate suggestions, starting each
+        team from the next best unused lead so the five cores stay distinct.
+        """
+        def base_id(species_id):
+            return (species_id or "").replace("_shadow", "")
+
+        used_bases = set()
+        teams = []
+        ranked = sorted(all_pokemon, key=lambda x: x.get("rating", 0), reverse=True)
+
+        for _ in range(count):
+            available = [
+                p for p in ranked
+                if base_id(p.get("speciesId")) not in used_bases
+            ]
+            if not available:
+                break
+
+            team = [available[0]]
+            used_bases.add(base_id(available[0].get("speciesId")))
+
+            while len(team) < 3:
+                remaining = [
+                    p for p in available
+                    if base_id(p.get("speciesId")) not in used_bases
+                ]
+                if not remaining:
+                    break
+
+                candidates = self.suggest_teammate(team, remaining, top_n=8)
+                pick = candidates[0] if candidates else remaining[0]
+                team.append(pick)
+                used_bases.add(base_id(pick.get("speciesId")))
+
+            if len(team) < 3:
+                break
+
+            analysis = self.evaluate_coverage(team)
+            teams.append({
+                "pokemon": team,
+                "analysis": analysis,
+                "score": analysis["safety_score"],
+            })
+
+        return teams
+
 if __name__ == "__main__":
     # Test with dummy data
     dummy_team = [
